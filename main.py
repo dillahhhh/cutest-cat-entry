@@ -15,6 +15,9 @@ OUT_DIR = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
 DST = os.path.join(OUT_DIR, "entry.png")
 if not os.path.isfile(SRC):
     sys.exit(f"missing entry image: {SRC}")
+with open(SRC, "rb") as fh:
+    if fh.read(8) != b"\x89PNG\r\n\x1a\n":
+        sys.exit(f"entry image is not a PNG: {SRC}")
 os.makedirs(OUT_DIR, exist_ok=True)
 shutil.copyfile(SRC, DST)
 size = os.path.getsize(DST)
