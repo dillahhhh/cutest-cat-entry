@@ -8,10 +8,13 @@ MAKEFUN_OUTPUT_DIR stands in for /output:
 """
 import os
 import shutil
+import sys
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
 OUT_DIR = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
 DST = os.path.join(OUT_DIR, "entry.png")
+if not os.path.isfile(SRC):
+    sys.exit(f"missing entry image: {SRC}")
 os.makedirs(OUT_DIR, exist_ok=True)
 shutil.copyfile(SRC, DST)
 size = os.path.getsize(DST)
